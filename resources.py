@@ -4,8 +4,8 @@ Provides Web Api
 '''
 
 from flask import Flask, request, Response, g, jsonify, _request_ctx_stack, redirect
-from flask.ext.restful import Resource, Api, abort
-from flask.ext.cors import CORS
+from flask_restful import Resource, Api, abort
+from flask_cors import CORS
 
 from werkzeug.exceptions import NotFound,  UnsupportedMediaType
 from utils import RegexConverter
@@ -24,6 +24,7 @@ LOCATION_PROFILE ="/profiles/location"
 SEARCH_PROFILE ="/profiles/search"
 MONITOR_PROFILE ="/profiles/monitor"
 SHOP_PROFILE = "/profiles/shop"
+ERROR_PROFILE = "/profiles/error"
 
 app = Flask(__name__)
 app.debug = True
@@ -49,6 +50,7 @@ def create_error_response(status_code, title, message=None):
 					resource_url=resource_url,
 					resource_type=resource_type)
 	response.status_code = status_code
+	response.mimetype = "application/json"+";"+ERROR_PROFILE
 	return response
 
 
@@ -389,7 +391,7 @@ class Inventorys(Resource):
 
 class Inventory(Resource):
 	'''
-	FOR GIVING THE DETAILS OF A SPECIFIC RECIPE & UPDATING, DELETEING IT
+	FOR GIVING THE DETAILS OF A SPECIFIC INVENTORY & UPDATING, DELETEING IT
 	GET & DELETE ARE DONE IMPLEMENTED 
 	PUT PROPERLY LIKE POST BEFORE
 	'''
@@ -397,7 +399,7 @@ class Inventory(Resource):
 	def get(self, inventoryid):
 		inventory_db = g.con.get_inventory(inventoryid)
 		if not inventory_db:
-			return create_error_response(404,"Inventory Error", "There is no such Inventory with this Group")
+			return create_error_response(404,"Inventory Error", "There is no such Inventory with this ID")
 
 		envelope = {}
 		links ={}
@@ -611,14 +613,14 @@ class List_Product(Resource):
 	TO MAKE A LIST OF LOW PRODUCTS 
 	GET TO GIVE LIST FOR A SPECIFIC GROUP
 	POST TO ADD THE PRODUCTS IN THE LIST
-	IMPLEMENT DELETE TO CLEAT THE LIST
+	IMPLEMENT DELETE TO CLEAN THE LIST
 	'''
 
 	def get(self, groupid):
 
 		listproduct_db = g.con.get_listproduct(groupid)
 		if not listproduct_db:
-			return create_error_response(404, "There is no list with this Group " )
+			return create_error_response(404, "Unknown Group", "There is no list with this Group " )
 
 		envelope = {}
 		items =[]
@@ -670,7 +672,7 @@ class Location_Service(Resource):
 
 		groupmember_db = g.con.get_group_memberid(memberid)
 		if not groupmember_db:
-			return create_error_response(404,"Member Error" "There is such no Member Registered " )
+			return create_error_response(404,"Member Error", "There is such no Member Registered " )
 		_groupid = groupmember_db['groupid']
 		membercoordinate_db = g.con.get_memberscoordinate(_groupid, memberid)
 		if not membercoordinate_db:
@@ -843,7 +845,7 @@ class Shop_Coordinate(Resource):
 
 		shop_db = g.con.get_shopscoordinate()
 		if not shop_db:
-			return create_error_response(404,"Shop location error", "There is no shop in the database " )
+			return create_error_response(404,"Shop location error", "Cannot access the database " )
 
 		envelope = {}
 		items = []
@@ -902,8 +904,9 @@ api.add_resource(Shop_Coordinate, '/api/shop_coordinate/',
 						endpoint='shop_coordinate')
 
 
-
-
+@app.route('/profiles/<profile_name>')
+def redirect_to_profile(profile_name):
+	return redirect(APIARY_PROFILES_URL + profile_name)
 
 
 if __name__ == '__main__':

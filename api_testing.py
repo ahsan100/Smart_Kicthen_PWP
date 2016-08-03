@@ -67,7 +67,6 @@ class MembersTestCase (ResourcesAPITestCase):
 					"email": "ahsan.manzoor@student.oulu.fi", "name": "Ahsan Manzoor", 
 					"gender": "Male"}}
 	member1_mod = {"phone": "12345"}
-	member1_wrong ={"phones": 1234}
 	def setUp(self):
 		super(MembersTestCase, self).setUp()
 		member_ID = 1
@@ -141,11 +140,6 @@ class MembersTestCase (ResourcesAPITestCase):
 		print '('+self.test_modify_nonexisting_member.__name__+')', self.test_modify_nonexisting_member.__doc__
 		resp = self.client.put(self.url_wrong,data=json.dumps(self.member1_mod),headers={"Content-Type":COLLECTIONJSON})
 		self.assertEquals(resp.status_code, 404)
-
-	def test_modify_wrong_member(self):
-		print '('+self.test_modify_wrong_member.__name__+')', self.test_modify_wrong_member.__doc__
-		resp = self.client.put(self.url,data=json.dumps(self.member1_wrong),headers={"Content-Type":COLLECTIONJSON})
-		self.assertEquals(resp.status_code, 400)
 
 class Search_MembersTestCase (ResourcesAPITestCase):
 

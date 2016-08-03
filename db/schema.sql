@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS `members` (
 
 CREATE TABLE IF NOT EXISTS `user_login` (
 	`user_id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-	`member_id`	INTEGER UNIQUE,
-	`email`	TEXT UNIQUE,
-	`password`	TEXT,
+	`member_id`	INTEGER NOT NULL UNIQUE,
+	`email`	TEXT NOT NULL UNIQUE,
+	`password`	NOT NULL TEXT,
 	`timestamp`	TEXT,
 	FOREIGN KEY(`member_id`) REFERENCES `members` ON DELETE CASCADE
 );
