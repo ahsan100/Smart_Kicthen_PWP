@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `user_login` (
 	`user_id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`member_id`	INTEGER NOT NULL UNIQUE,
 	`email`	TEXT NOT NULL UNIQUE,
-	`password`	NOT NULL TEXT,
+	`password`	TEXT NOT NULL,
 	`timestamp`	TEXT,
 	FOREIGN KEY(`member_id`) REFERENCES `members` ON DELETE CASCADE
 );

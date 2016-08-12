@@ -1,0 +1,1857 @@
+FORMAT: 1A
+HOST: http://localhost:5000
+
+# PWP Smart Kicthen App
+
+The smart kicthen WEB API offers different kinds of functionalities to help the future families to keep track of their inventory in the kitchen.  The feature of the system includes automated shopping list when an item reaches the defined threshold level & sending out the notification to the user who is nearest to the grocery store. It will also provide help with the preparation of the food & calculate ingredients used & a feature to include custom recipes. It provide interface for the mobile. Clients will be able to use service once they authenticate themselves & by using the client they can add/delete members from their personal account. Smart Food will be able to manage their kitchen under one service
+
+
+# Group Profiles
+
+
+## MEMBER PROFILE [/profiles/member-profile]
+
+Profile definition for all Members related resources.
+
+### Semantic Descriptors
+
+#### Data Type Member
+
+ * `memberid` (integer): Member ID of the member & it is Auto-incremented.
+ * `name` (string): Full Name of the Member.
+ * `phone` (string): Phone Number of the Member.
+ * `dob` (string): Date of birth of the Member.
+ * `gender` (string): Gender of the Member.
+
+### Link relations
+ * `edit`. Link to edit the target resource. It cannot be used with DELETE, just with PUT.
+ * `delete`. Link to delete target resources. It can be used only with DELETE.
+
+### GET
+
+Return the Member Profile in HTML format
++ Response 200 (text/html)
+
+
+
+
+## INVENTORY PROFILE [/profiles/inventory]
+
+Profile definition for all Inventory related resources.
+
+### Semantic Descriptors
+
+#### Data Type Inventory
+
+ * `inventoryid` (integer): Inventory ID of the item & it is Auto-incremented.
+ * `name` (string): Name of the item.
+ * `description` (string): Description of the item.
+ * `threshold` (integer): Threshold of the item after which it will be added to the low product list.
+ * `quantity` (integer): Quantity of the item that is already availiable.
+ * `groupid` (integer): Group ID of the group with which the item is associated & it is taken from Group (Foreign Key).
+ * `unit` (string): Unit of the item in which it is measured.
+
+Inherited from [Collection+JSON](http://amundsen.com/media-types/collection/format/) media type and its extensions: template validation extension and value-types extension
+ * `template` (object): The template object contains all the input elements used to add a new instances of the current resource.
+
+### Link relations
+ * `edit`. Link to edit the target resource. It cannot be used with DELETE, just with PUT.
+ * `delete`. Link to delete target resources. It can be used only with DELETE.
+
+### GET
+
+Return the Inventory Profile in HTML format
++ Response 200 (text/html)
+
+
+
+## RECIPE PROFILE [/profiles/recipe]
+
+Profile definition for all Recipe related resources.
+
+### Semantic Descriptors
+
+#### Data Type Recipe
+
+ * `recipeid` (integer): Recipe ID of the recipe & it is Auto-incremented.
+ * `name` (string): Name of the Recipe.
+ * `details` (string): Details of the Recipe.
+ * `groupid` (integer): Group ID of the group with which the recipe is associated & it is taken from Group (Foreign Key).
+ * `preparationtime` (string): Time it takes to make the recipe.
+
+Inherited from [Collection+JSON](http://amundsen.com/media-types/collection/format/) media type and its extensions: template validation extension and value-types extension
+ * `template` (object): The template object contains all the input elements used to add a new instances of the current resource.
+
+### Link relations
+ * `edit`. Link to edit the target resource. It cannot be used with DELETE, just with PUT.
+ * `delete`. Link to delete target resources. It can be used only with DELETE.
+
+### GET
+
+Return the Recipe Profile in HTML format
++ Response 200 (text/html)
+
+
+
+## LIST PROFILE [/profiles/listproduct]
+
+Profile definition for all Low Product List related resources.
+
+### Semantic Descriptors
+
+#### Data Type List
+
+ * `groupid` (integer): Group ID of the group with which the recipe is associated & it is taken from Group (Foreign Key).
+ * `inventoryid` (integer): Inventory ID of the item that is low & it is taken from Inventory (Foreign Key)
+
+Inherited from [Collection+JSON](http://amundsen.com/media-types/collection/format/) media type and its extensions: template validation extension and value-types extension
+ * `template` (object): The template object contains all the input elements used to add a new instances of the current resource.
+
+### Link relations
+ * `edit`. Link to edit the target resource. It cannot be used with DELETE, just with PUT.
+ * `delete`. Link to delete target resources. It can be used only with DELETE.
+
+### GET
+
+Return the List Profile in HTML format
++ Response 200 (text/html)
+
+
+
+## GROUP PROFILE [/profiles/group]
+
+Profile definition for Members in a Group related resources.
+
+#### Data Type Group
+
+ * `groupid` (integer): Group ID of the group & it is Auto-incremented.
+ * `name` (string): Name of the Group.
+ * `memberid` (integer): Member ID of the member & it is taken from the Member (Foreign Key).
+
+Inherited from [Collection+JSON](http://amundsen.com/media-types/collection/format/) media type and its extensions: template validation extension and value-types extension
+ * `template` (object): The template object contains all the input elements used to add a new instances of the current resource.
+
+### Link relations
+ * `member`:  This action list the member searched. It is an instance of the type Member defined in the profile [Member Profile](resource/profiles/member-profile). Can only be accessible with GET.
+ * `edit`. Link to edit the target resource. It cannot be used with DELETE, just with PUT.
+ * `delete`. Link to delete target resources. It can be used only with DELETE.
+
+
+### GET
+
+Return the Group Profile in HTML format
++ Response 200 (text/html)
+
+
+
+
+## LOCATION PROFILE [/profiles/location]
+
+Profile definition for all Members Location related resources.
+
+### Semantic Descriptors
+
+#### Data Type Location
+
+ * `groupid` (integer): Group ID of the group & it is taken from Group (Foreign Key).
+ * `memberid` (integer): Member ID of the member & it is taken from Member (Foreign Key).
+ * `latitude` (string): Latitude of the member. 
+ * `longitude` (string): Longitude of the member.
+
+### Link relations
+
+ * `member`:  This action list the member searched. It is an instance of the type Member defined in the profile [Member Profile](resource/profiles/member-profile). Can only be accessible with GET.
+ * `edit`. Link to edit the target resource. It cannot be used with DELETE, just with PUT.
+ * `delete`. Link to delete target resources. It can be used only with DELETE.
+
+### GET
+
+Return the Location Profile in HTML format
++ Response 200 (text/html)
+
+
+## SEARCH PROFILE [/profiles/search]
+
+Profile definition for all Search Members related resources.
+
+### Link relations
+
+ * `member`:  This action list the member searched. It is an instance of the type Member defined in the profile [Member Profile](resource/profiles/member-profile). Can only be accessible with GET.
+
+### GET
+
+Return the Search Profile in HTML format
++ Response 200 (text/html)
+
+
+
+
+## MONITOR PROFILE [/profiles/monitor]
+
+Profile definition for Monitoring for generating Notification related resources.
+
+### Semantic Descriptors
+
+#### Data Type Monitor
+
+ * `memberid` (integer): Member ID of the member & it is taken from Member (Foreign Key).
+ * `flag` (integer): Default value is 0 & Flag of the member is turned to 1 when there is any product that is low in the group he is associated.
+
+### Link relations
+ * `edit`. Link to edit the target resource. It cannot be used with DELETE, just with PUT.
+ * `delete`. Link to delete target resources. It can be used only with DELETE.
+
+### GET
+
+Return the Monitor Profile in HTML format
++ Response 200 (text/html)
+
+
+
+## SHOP PROFILE [/profiles/shop]
+
+Profile definition for all List of Shops related resources.
+
+### Semantic Descriptors
+
+#### Data Type Shop
+
+ * `shopid` (integer): Shop ID of the shop & it is Auto-incremented.
+ * `name` (string): Name of the shop.
+ * `latitude1` (string): Latitude 1/2 of the shop. 
+ * `longitude1` (string): Longitude 1/2 of the shop.
+ * `latitude2` (string): Latitude 2/2 of the shop.
+ * `longitude2` (string): Longitude 2/2 of the shop.
+
+Inherited from [Collection+JSON](http://amundsen.com/media-types/collection/format/) media type and its extensions: template validation extension and value-types extension
+ * `template` (object): The template object contains all the input elements used to add a new instances of the current resource.
+
+### Link relations
+ * `edit`. Link to edit the target resource. It cannot be used with DELETE, just with PUT.
+ * `delete`. Link to delete target resources. It can be used only with DELETE.
+
+### GET
+
+Return the Shop Profile in HTML format
++ Response 200 (text/html)
+
+
+## ERROR PROFILE [/profiles/error]
+
+Profile definition for all errors messages in the system
+
++ Attributes
+    + title (string, required) - A short description of the error
+    + message (string, required) - A detailed description of the error
+    + resource_url (string, required) - A url of the resource generating the error
+    + resource_type (string, required) - The name of the resource generating the error
+
+
+### GET
+
+Return the Error Profile in HTML format
++ Response 200 (text/html)
+
+
+# Group Member
+
+All these resources use the [Member Profile](reference/profiles/member-profile).
+
+In addition all error member follow the profile defined [Error Profile](reference/profiles/error)
+
+## Member [/api/member/{memberid}]
+
+Member of the application. A member can make a group, add recipes & inventory. Each member has a unique member id that serves as a unique identifier. 
+Anyone can register to become a member.
+
++ Parameters 
+    + memberid: `1` (integer)   - The id of the member.
+
+### Receive member information [GET]
+
+Receives the information of a particular member.
+
++ Relation: self
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 200 (application/hal+json)
+
+    Member correctly retrieved
+
+    + Body
+
+            {
+                "member":{
+                            "dob": "030191",
+                            "phone": "+358413660505",
+                            "email": "ahsan.manzoor@student.oulu.fi",
+                            "name": "Ahsan Manzoor",
+                            "gender": "Male"
+                        },
+                "href": "/api/member/1",
+                "read-only": true
+            }
+
+
++ Response 404 (application/json)
+
+    The member with id `memberid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no a member with id -1",
+                "resource_type": "member",
+                "resource_url": "/api/member/-1",
+                "title": "Member not found"
+            }
+
+
+### Delete a member [DELETE]
+
+Delete a member from the system
+
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 204
+
+    The message was successfully deleted
+        
+    + Body 
+
++ Response 404 (application/json)
+
+    The member with id `memberid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no a member with id -1",
+                "resource_type": "member",
+                "resource_url": "/api/member/-1",
+                "title": "Member not found"
+            }
+
+### Edit a member [PUT]       
+
+Edit the information of a member.
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+    
+            {
+                "phone": "12345"
+            }
+
++ Response 204
+
+    The member is modified correctly
+        
+    + Body
+
++ Response 404 (application/json)
+
+    The member with id `memberid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no a member with id -1",
+                "resource_type": "member",
+                "resource_url": "/api/member/-1",
+                "title": "Member not found"
+            }
+
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"member",
+                "resource_url": "/api/member/1",
+                "title": "Unsupported media type"
+            }
+
+
++ Response 500 (application/json)
+
+    The server cannot store the member information in the database.
+    
+    + Body 
+    
+            {
+                "message": "Member information cannot be updated",
+                "resource_type":"member",
+                "resource_url": "/api/member/1",
+                "title": "Internal error"
+            }
+
+# Group Search Member
+
+All these resources use the [Search Profile](reference/profiles/search).
+
+In addition all error search follow the profile defined [Error Profile](reference/profiles/error)
+
+## Search Members [/api/search_members/{email}]
+
+Search any Member of the application using the email.
+
++ Parameters 
+    + email: `ahsan.manzoor@student.oulu.fi` (string)   - The email of the member.
+
+### Receive member information [GET]
+
+Search the information of a particular member.
+
++ Relation: self
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 200 (application/hal+json)
+
+    Member correctly retrieved
+
+    + Body
+
+            {
+                "user":[
+                    {
+                        "href": "/api/member/1",
+                        "data":[
+                            {
+                                "name": "memberid", "value": 1
+                            }
+                        ],
+                        "read-only": true
+                    }
+                ]
+            }
+
+
++ Response 404 (application/json)
+
+    The member with `email` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no group with e-mail ahsan.manzoor@student.oulu",
+                "resource_type": "search_members",
+                "resource_url": "/api/search_members/ahsan.manzoor@student.oulu",
+                "title": "User not found"
+            }
+
+
+
+# Group Inventory
+
+All these resources use the [Inventory Profile](reference/profiles/inventory).
+
+In addition all error inventory follow the profile defined [Error Profile](reference/profiles/error)
+
+## Inventory [/api/inventory/{inventoryid}]
+
+Items that are availible. Each item has a unique inventory id that serves as a unique identifier. Any registered member can add a inventory.
+
++ Parameters 
+    + inventoryid: `1` (integer)   - The id of the item.
+
+### Receive Inventory information [GET]
+
+Receives the information of a particular item.
+
++ Relation: self
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 200 (application/hal+json)
+
+    Item correctly retrieved
+
+    + Body
+
+            {
+                "inventory":{
+                                "threshold": 1,
+                                "quantity": 2,
+                                "name": "Banana",
+                                "unit": "KG",
+                                "description": "Long Yellow bananas"
+                            },
+                "links":{
+                            "curies":[
+                                {
+                                    "href": "/profiles/inventory/{rels}",
+                                    "name": "recipe",
+                                    "templated": true
+                                }
+                            ],
+                            "self":{
+                                "profile": "/profiles/inventory",
+                                "href": "/api/inventory/1"
+                            },
+                            "inventory:edit":{
+                                "profile": "/profiles/inventory",
+                                "href": "/api/inventory/1"
+                            },
+                            "inventory:delete":{
+                                "profile": "/profiles/inventory",
+                                "href": "/api/inventory/1"
+                            }
+                        }
+            }
+
+
++ Response 404 (application/json)
+
+    The item with id `inventoryid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no such Inventory with this ID",
+                "resource_type": "inventory",
+                "resource_url": "/api/inventory/-1",
+                "title": "Inventory Error"
+            }
+
+
+### Delete a inventory [DELETE]
+
+Delete a item from the system
+
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 204
+
+    The message was successfully deleted
+        
+    + Body 
+
++ Response 404 (application/json)
+
+    The item with id `inventoryid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no such Inventory with this ID",
+                "resource_type": "inventory",
+                "resource_url": "/api/inventory/-1",
+                "title": "Inventory Error"
+            }
+
+### Edit a inventory [PUT]       
+
+Edit the information of a item.
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+    
+            {
+                "name" : "new",
+                "description": "new",
+                "threshold" : 1,
+                "quantity" : 3,
+                "unit": "KG"
+            }
+
++ Response 204
+
+    The item is modified correctly
+        
+    + Body
+
++ Response 404 (application/json)
+
+    The item with id `inventoryid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no such Inventory with this ID",
+                "resource_type": "inventory",
+                "resource_url": "/api/inventory/-1",
+                "title": "Inventory Error"
+            }
+
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"inventory",
+                "resource_url": "/api/inventory/1",
+                "title": "Unsupported media type"
+            }
+
+
++ Response 500 (application/json)
+
+    The server cannot store the item information in the database.
+    
+    + Body 
+    
+            {
+                "message": "There is no such Inventory",
+                "resource_type":"inventory",
+                "resource_url": "/api/inventory/1",
+                "title": "Internal error"
+            }
+
+
+## Inventory List [/api/inventorys/{groupid}]
+
+A list of all items for a specific group.
+
++ Parameters 
+    + groupid: `1` (integer)   - The id of the group.
+
+### List Inventorys  [GET]
+
+Get a list of all the items in the application
+
++ Relation: self    
++ Request
+    
+    + Headers
+    
+            Accept: application/vnd.collection+json
+    
++ Response 200 (application/vnd.collection+json)
+
+    The response uses the [Collection+JSON](http://amundsen.com/media-types/collection/) media type. 
+
+    + Body
+
+            {
+                "inventory":[
+                        {
+                            "href": "/api/inventory/1",
+                            "data":[
+                                {
+                                    "name": "Inventoryname", "value": "Banana"
+                                }
+                            ],
+                            "read-only": true
+                        },
+                        {
+                            "href": "/api/inventory/2",
+                            "data":[
+                                {
+                                    "name": "Inventoryname", "value": "Tomato"
+                                }
+                            ],
+                            "read-only": true
+                        },
+                        {
+                            "href": "/api/inventory/3",
+                            "data":[
+                                {
+                                    "name": "Inventoryname", "value": "Bread"
+                                }
+                            ],
+                            "read-only": true
+                        },
+                        {
+                            "href": "/api/inventory/10",
+                            "data":[
+                                {
+                                    "name": "Inventoryname", "value": "Egg"
+                                }
+                            ],
+                            "read-only": true
+                        },
+                        {
+                            "href": "/api/inventory/11",
+                            "data":[
+                                {
+                                    "name": "Inventoryname", "value": "Potato"
+                                }
+                            ],
+                            "read-only": true
+                        },
+                        {
+                            "href": "/api/inventory/12",
+                            "data":[
+                                {
+                                    "name": "Inventoryname", "value": "Milk"
+                                }
+                            ],
+                            "read-only": true
+                        }
+                    ]
+            }
+
++ Response 404 (application/json)
+
+    The group with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no such Group with this ID",
+                "resource_type": "inventorys",
+                "resource_url": "/api/inventory/-1",
+                "title": "Group not found"
+            }
+
+
+### Create a new inventory item [POST]       
+
+Create a new inventory in a Group. 
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+    
+            {
+                "name" : "new",
+                "description": "new",
+                "threshold" : 1,
+                "quantity" : 3,
+                "unit": "KG"
+            }
+
++ Response 201
+
+    The inventory is created correctly. 
+        
+    + Headers
+                
+            Location: URL of the new created resource
+
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"inventorys",
+                "resource_url": "/api/inventorys/1",
+                "title": "Unsupported media type"
+            }
+
+
++ Response 500 (application/json)
+
+    The server cannot store the item information in the database.
+    
+    + Body 
+    
+            {
+                "message": "Cannot access the database",
+                "resource_type":"inventorys",
+                "resource_url": "/api/inventorys/1",
+                "title": "Problem with the database"
+            }
+
+
+
+
+# Group Recipe
+
+All these resources use the [Recipe Profile](reference/profiles/recipe).
+
+In addition all error recipe follow the profile defined [Error Profile](reference/profiles/error)
+
+## Recipe [/api/recipe/{recipeid}]
+
+Recipes that are availible. Each recipe has a unique id that serves as a unique identifier. Any registered member can add a new recipe.
+
++ Parameters 
+    + recipeid: `1` (integer)   - The id of the item.
+
+### Receive Recipe information [GET]
+
+Receives the information of a particular recipe.
+
++ Relation: self
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 200 (application/hal+json)
+
+    Item correctly retrieved
+
+    + Body
+
+            {
+                recipe:{
+                            "preparation_time": 15,
+                            "name": "Potato & Eggs",
+                            "details": "Pakistani Cusine"
+                        },
+                "links":{
+                            "curies":[
+                                {
+                                    "href": "/profiles/recipe/{rels}",
+                                    "name": "recipe",
+                                    "templated": true
+                                }
+                            ],
+                            "self":{
+                                "profile": "/profiles/recipe",
+                                "href": "/api/recipe/1"
+                            },
+                            "recipe:edit":{
+                                "profile": "/profiles/recipe",
+                                "href": "/api/recipe/1"
+                            },
+                            "recipe:delete":{
+                                "profile": "/profiles/recipe",
+                                "href": "/api/recipe/1"
+                            }
+                        }
+            }
+
+
++ Response 404 (application/json)
+
+    The recipe with id `recipeid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no such Recipe with ID -1",
+                "resource_type": "recipe",
+                "resource_url": "/api/recipe/-1",
+                "title": "Unknown Recipe"
+            }
+
+
+### Delete a recipe [DELETE]
+
+Delete a recipe from the system
+
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 204
+
+    The message was successfully deleted
+        
+    + Body 
+
++ Response 404 (application/json)
+
+    The recipe with id `recipeid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no such Recipe with ID -1",
+                "resource_type": "recipe",
+                "resource_url": "/api/recipe/-1",
+                "title": "Unknown Recipe"
+            }
+
+### Edit a recipe [PUT]       
+
+Edit the information of a recipe.
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+    
+            {
+                "name" : "new",
+                "details": "new",
+                "preparation_time" : 14
+            }
+
++ Response 204
+
+    The recipe is modified correctly
+        
+    + Body
+
++ Response 404 (application/json)
+
+    The recipe with id `recipeid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no such Recipe with ID -1",
+                "resource_type": "recipe",
+                "resource_url": "/api/recipe/-1",
+                "title": "Unknown Recipe"
+            }
+
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"recipe",
+                "resource_url": "/api/recipe/1",
+                "title": "UnsupportedMediaType"
+            }
+
+
+## Recipe List [/api/recipes/{groupid}]
+
+A list of all recipes for a specific group.
+
++ Parameters 
+    + groupid: `1` (integer)   - The id of the group.
+
+### List Recipes  [GET]
+
+Get a list of all the recipes in the application
+
++ Relation: self    
++ Request
+    
+    + Headers
+    
+            Accept: application/vnd.collection+json
+    
++ Response 200 (application/vnd.collection+json)
+
+    The response uses the [Collection+JSON](http://amundsen.com/media-types/collection/) media type. 
+
+    + Body
+
+            {
+                "recipes":[
+                        {
+                            "href": "/api/recipe/1",
+                            "data":[
+                                {
+                                    "name": "recipename", "value": "Potato & Eggs"
+                                }
+                            ],
+                            "read-only": true
+                        },
+                        {
+                            "href": "/api/recipe/2",
+                            "data":[
+                                {
+                                    "name": "recipename", "value": "Banana Milkshake"
+                                }
+                            ],
+                            "read-only": true
+                        },
+                        {
+                            "href": "/api/recipe/3",
+                            "data":[
+                                {
+                                    "name": "recipename", "value": "Tomato Sauce"
+                                }
+                            ],
+                            "read-only": true
+                        }
+                    ]
+            }
+
++ Response 404 (application/json)
+
+    The recipe with id `recipeid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no Recipe with this Group",
+                "resource_type": "recipes",
+                "resource_url": "/api/recipes/-1",
+                "title": "Recipe Error"
+            }
+
+
+### Create a new recipe [POST]       
+
+Create a new recipe in a Group. 
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+    
+            {
+                "recipe": [
+                    "new",
+                    "new",
+                    14
+                ]
+            }
+
++ Response 201
+
+    The recipe is created correctly. 
+        
+    + Headers
+                
+            Location: URL of the new created resource
+
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"recipes",
+                "resource_url": "/api/recipes/1",
+                "title": "Unsupported media type"
+            }
+
+
++ Response 500 (application/json)
+
+    The server cannot store the item information in the database.
+    
+    + Body 
+    
+            {
+                "message": "Cannot access the database",
+                "resource_type":"recipes",
+                "resource_url": "/api/recipes/1",
+                "title": "Problem with the database"
+            }
+
+
+
+# Group List Product
+
+All these resources use the [List Profile](reference/profiles/list).
+
+In addition all error list follow the profile defined [Error Profile](reference/profiles/error)
+
+## List Product [/api/list_product/{groupid}]
+
+A list of all items that are low for a specific group.
+
++ Parameters 
+    + groupid: `1` (integer)   - The id of the Group.
+
+### Receive List information [GET]
+
+Receives the information of Low product of a particular group.
+
++ Relation: self    
++ Request
+    
+    + Headers
+    
+            Accept: application/vnd.collection+json
+    
++ Response 200 (application/vnd.collection+json)
+
+    The response uses the [Collection+JSON](http://amundsen.com/media-types/collection/) media type. 
+
+    + Body
+            {
+                "listproduct":[
+                            {
+                                "href": "/api/inventory/3",
+                                "data":[
+                                    {
+                                        "name": "inventoryname", "value": "Bread"
+                                    }
+                                ],
+                                "read-only": true
+                            },
+                            {
+                                "href": "/api/inventory/10",
+                                "data":[
+                                    {
+                                        "name": "inventoryname", "value": "Egg"
+                                    }
+                                ],
+                                "read-only": true
+                            }
+                        ]
+                    
+            }
+
+
++ Response 404 (application/json)
+
+    The list product with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no list with this Group",
+                "resource_type": "list_product",
+                "resource_url": "/api/list_product/-1",
+                "title": "Unknown Group"
+            }
+
+
+### Delete a List [DELETE]
+
+Clear a list from the system once back in inventory.
+
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 204
+
+    The list was successfully deleted
+        
+    + Body 
+
++ Response 404 (application/json)
+
+    The list product with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no list with this Group",
+                "resource_type": "list_product",
+                "resource_url": "/api/list_product/-1",
+                "title": "Unknown Group"
+            }
+
+### Create a new list [POST]       
+
+Create a new list in a Group. 
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body
+    
+            {
+                "inventoryid": 2
+            }
+
++ Response 201
+
+    The list was successfully created
+        
+    + Headers
+                
+            Location: URL of the new created resource
+
++ Response 404 (application/json)
+
+    The list product with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no such  Group",
+                "resource_type": "list_product",
+                "resource_url": "/api/list_product/-1",
+                "title": "Group Error"
+            }
+
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"list_product",
+                "resource_url": "/api/list_product/1",
+                "title": "UnsupportedMediaType"
+            }
+
++ Response 400 (application/json)
+
+    The system already contains the item in the low product list.
+    
+    + Body 
+    
+            {
+                "message": "This product is already in low list",
+                "resource_type":"list_product",
+                "resource_url": "/api/list_product/1",
+                "title": "Product Already in List"
+            }
+
+
+# Group Group
+
+All these resources use the [Group Profile](reference/profiles/group).
+
+In addition all error group follow the profile defined [Error Profile](reference/profiles/error)
+
+## Group [/api/group/{groupid}]
+
+Group of the application. A Group can have a member, recipes & inventory. Each group has a unique id that serves as a unique identifier. 
+Any registerd member can create member.
+
++ Parameters 
+    + groupid: `1` (integer)   - The id of the Group.
+
+### Receive Group information [GET]
+
+Receives the information of a particular group.
+
++ Relation: self
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 200 (application/hal+json)
+
+    Group correctly retrieved
+
+    + Body
+
+            {
+                "group":[
+                        {
+                            "href": "/api/group/1",
+                            "data":[
+                                {
+                                    "name": "groupname", "value": "admins"
+                                }
+                            ],
+                            "read-only": true
+                        }
+                    ]
+            }
+
+
++ Response 404 (application/json)
+
+    The group with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no group with id -1",
+                "resource_type": "group",
+                "resource_url": "/api/group/-1",
+                "title": "Group not found"
+            }
+
+
+### Delete a Group [DELETE]
+
+Delete a group from the system
+
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 204
+
+    The group was successfully deleted
+        
+    + Body 
+
++ Response 404 (application/json)
+
+    The group with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no group with id -1",
+                "resource_type": "group",
+                "resource_url": "/api/group/-1",
+                "title": "Group not found"
+            }
+
+### Edit a group [PUT]       
+
+Edit the information of a group.
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+    
+            {
+                'name': "newnaming"
+            }
+
++ Response 204
+
+    The group is modified correctly
+        
+    + Body
+
+    + Headers
+                
+            Location: URL of the new created resource
+
++ Response 404 (application/json)
+
+    The group with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no group with id -1",
+                "resource_type": "group",
+                "resource_url": "/api/group/-1",
+                "title": "Group not found"
+            }
+
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"group",
+                "resource_url": "/api/group/1",
+                "title": "UnsupportedMediaType"
+            }
+
+
+## Group Member [/api/group_member/{groupid}]
+
+A list of all members of a specific group.
+
++ Parameters 
+    + groupid: `1` (integer)   - The id of the group.
+
+### List Members  [GET]
+
+Get a list of all the members in the group
+
++ Relation: self    
++ Request
+    
+    + Headers
+    
+            Accept: application/vnd.collection+json
+    
++ Response 200 (application/vnd.collection+json)
+
+    The response uses the [Collection+JSON](http://amundsen.com/media-types/collection/) media type. 
+
+    + Body
+
+            {
+                "group":[
+                    {
+                        "href": "/api/member/1",
+                        "data":[
+                            {
+                                "name": "membername", "value": "Ahsan Manzoor"
+                            }
+                        ],
+                        "read-only": true
+                    },
+                    {
+                        "href": "/api/member/2",
+                        "data":[
+                            {
+                                "name": "membername", "value": "Awais Aslam"
+                            }
+                        ],
+                        "read-only": true
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    The group with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no group with id -1",
+                "resource_type": "group_member",
+                "resource_url": "/api/group_member/-1",
+                "title": "Group Error"
+            }
+
+
+### Add a new member [POST]       
+
+Add a new member in a Group. 
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+    
+            {
+                "memberid": 6
+            }
+
++ Response 201
+
+        The member is added correctly.
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"group_member",
+                "resource_url": "/api/group_member/1",
+                "title": "Unsupported media type"
+            }
+
+
++ Response 400 (application/json)
+
+    The system already contains the member in a group.
+    
+    + Body 
+    
+            {
+                "message": "PLease check the member again",
+                "resource_type":"group_member",
+                "resource_url": "/api/group_member/1",
+                "title": "Member Already in group"
+            }
+
+
+## Manage Group  [/api/manage_group/{groupname}]
+
+A Search of a group using the name & adding new groups.
+
++ Parameters 
+    + groupname: `admins` (string)   - The name of the group.
+
+### Search Group  [GET]
+
+Search a group
+
++ Relation: self    
++ Request
+    
+        Accept: application/hal+json
+
++ Response 200 (application/hal+json)
+    
+    + Body
+
+            {
+                "group":[
+                    {
+                        "href": "/api/group/1",
+                        "data":[
+                            {
+                                "name": "groupname", "value": "admins"
+                            }
+                        ],
+                        "read-only": true
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    The group with name `groupname` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no group with name adminss",
+                "resource_type": "manage_group",
+                "resource_url": "/api/manage_group/adminss",
+                "title": "Group not found"
+            }
+
+
+### Create a new group [POST]       
+
+Create a new Group. 
+
+    + Headers
+    
+            Accept: application\json
+
++ Response 201
+
+    The member is added correctly. 
+        
+    + Headers
+
+            Location: URL of the new created resource
+
++ Response 400 (application/json)
+
+    The system already contains the member in a group.
+    
+    + Body 
+    
+            {
+                "message": "Group Name Already in use, please change",
+                "resource_type":"group_member",
+                "resource_url": "/api/group_member/1",
+                "title": "Name Already in Use"
+            }
+
+# Group Location Service
+
+All these resources use the [Location Profile](reference/profiles/location).
+
+In addition all error location follow the profile defined [Error Profile](reference/profiles/error)
+
+## Location Service [/api/location_service/{memberid}]
+
+All Members Location related for the notification Service.
+
++ Parameters 
+    + memberid: `1` (integer)   - The id of the Member.
+
+### Receive Location information [GET]
+
+Receives the location information of a particular member.
+
++ Relation: self
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 200 (application/hal+json)
+
+    Location correctly retrieved
+
+    + Body
+
+            {
+                "membercoordinate":{
+                                "href": "/api/member/1",
+                                "data":[
+                                    {
+                                        "name": "latitude",
+                                        "value": "65.058428"
+                                    },
+                                    {
+                                        "name": "longitude",
+                                        "value": "25.465373"
+                                    }
+                                ],
+                                "read-only": true
+                            }
+            }
+
+
++ Response 404 (application/json)
+
+    The Member with id `memberid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is such no Member Registered",
+                "resource_type": "location_service",
+                "resource_url": "/api/location_service/-1",
+                "title": "Member Error"
+            }
+
+### Edit a Location [PUT]       
+
+Edit the location information of a member.
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+    
+            {
+                "latitude": "76.5432",
+                "longitude": "12.7654"
+            }
+
++ Response 204
+
+    The location is modified correctly
+        
+    + Body
+
+    + Headers
+                
+            Location: URL of the new created resource
+
++ Response 404 (application/json)
+
+    The member with id `memberid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": ""There is such no Member Registered",
+                "resource_type": "location_service",
+                "resource_url": "/api/location_service/-1",
+                "title": "Member Error"
+            }
+
+
++ Response 415 (application/json)
+
+    The server cannot understand the format of the response.
+    
+    + Body 
+    
+            {
+                "message": "Use a JSON compatible format",
+                "resource_type":"location_service",
+                "resource_url": "/api/location_service/1",
+                "title": "UnsupportedMediaType"
+            }
+
+
+# Group Monitor member
+
+All these resources use the [monitor Profile](reference/profiles/monitor).
+
+In addition all error monitor member follow the profile defined [Error Profile](reference/profiles/error)
+
+## Monitor Member [/api/monitor_member/{memberid}]
+
+To raise the flag for the notification Service.
+
++ Parameters 
+    + memberid: `1` (integer)   - The id of the Member.
+
+### Receive Flag information [GET]
+
+Receives the Flag information of a particular member.
+
++ Relation: self
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 200 (application/hal+json)
+
+    Flag correctly retrieved
+
+        + Body
+
+            {
+                "monitormember":{
+                                "href": "/api/monitor_member/1",
+                                "data":[
+                                    {
+                                        ""name": "flag", "value": 0"
+                                    }
+                                ],
+                                "read-only": true
+                            }
+            }
+
+
++ Response 404 (application/json)
+
+    The Member with id `memberid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no member with this Group",
+                "resource_type": "monitor_member",
+                "resource_url": "/api/monitor_member/-1",
+                "title": "Member Error"
+            }
+
+
+## Monitor Members [/api/monitor_member/{groupid}]
+
+To raise the flag for all the members if there is low product for a group.
+
+### Edit a Monitor Member [PUT]       
+
+Edit the flag information of a member.
+
++ Response 204
+
+    The flag is modified correctly
+
+    + Body 
+
++ Response 404 (application/json)
+
+    The group with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": ""There is no list with this Group ",
+                "resource_type": "monitor_member",
+                "resource_url": "/api/monitor_member/-1",
+                "title": "Group Error"
+            }
+
+### Changes a Flag [DELETE]
+
+Changes a flag of a member back to 0.
+
++ Request
+    
+    + Headers
+    
+            Accept: application/hal+json
+
++ Response 204
+
+    The flag was successfully changed.
+        
+    + Body 
+
++ Response 404 (application/json)
+
+    The group with id `groupid` does not exist in the database.
+
+    + Body 
+    
+            {
+                "message": "There is no group with id -1",
+                "resource_type": "monitor_member",
+                "resource_url": "/api/monitor_member/-1",
+                "title": "Error"
+            }
+
+
+# Group Shop Coordinate
+
+All these resources use the [shop Profile](reference/profiles/shop).
+
+In addition all error shop follow the profile defined [Error Profile](reference/profiles/error)
+
+## Shop Coordinate [/api/shop_coordinate/]
+
+To get the location of the shops
+
+### Receive Shop Location [GET]
+
+Receives the Shop information.
+
++ Request (application/vnd.collection+json)
+
+    + Headers
+    
+            Accept: application\json
+
+    + Body 
+            {
+                "shop":[
+                    {
+                        "data":[
+                            {
+                                "name": "Sale", "latitude1": "65.059914", "latitude2": "65.060602", "longitude2": "25.480799",…
+                            }
+                        ]
+                    },
+                            {
+                        "data":[
+                            {
+                                "name": "Tokmanni", "latitude1": "65.058348", "latitude2": "65.059081", "longitude2": "25.478980",…
+                            }
+                        ]
+                    },
+                            {
+                        "data":[
+                            {
+                                "name": "University E Gate", "latitude1": "65.057866", "latitude2": "65.058472", "longitude2": "25.470339",…
+                            }
+                        ]
+                    }
+                  ]
+            }
+
++ Response 500 (application/json)
+
+    The server cannot store the item information in the database.
+    
+    + Body 
+    
+            {
+                "message": "Cannot access the database",
+                "resource_type":"shop_coordinate",
+                "resource_url": "/api/shop_coordinate/",
+                "title": "Shop location error"
+            }
